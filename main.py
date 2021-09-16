@@ -1,8 +1,17 @@
 import numpy as np;
 
 
-def generatePivotTable(matrix):
+def generateMatrix(): # to get the matrix from user, but for now, just set some matrix var
+    # a = np.array([[1, 2, 3],
+    #             [4, 5, 6],
+    #             [7, 8, 9],
+    #             [10, 11, 12]]);
+    a = np.array([[3, 1],
+                [-1, 2]]);
+    return a;
     
+
+def generatePivotTable(matrix):
     minimumVal = 2 * abs(np.min(matrix));
     rowIndex = [];
     colIndex = [];
@@ -28,29 +37,42 @@ def generatePivotTable(matrix):
     
     # set the bottom right to be 0
     stackVertical[-1][-1] = 0;
-    mainMatrix = stackVertical;
+    augmentedMatrix = stackVertical;
     
-    return [rowIndex, colIndex, mainMatrix, minimumVal];
+    return [rowIndex, colIndex, augmentedMatrix, minimumVal];
+
+
+
+def pickPivot(augMatrix):
+    veryLargeNumber = 2 * abs(np.max(augMatrix));
+    trueRow = augMatrix.shape[0] - 1;
+    trueCol = augMatrix.shape[1] - 1;
+    
+    pivot = (augMatrix[0][0], veryLargeNumber, (0, 0));
+    
+    for column in range(0, trueCol, 1):
+        if augMatrix[trueRow][column] < 0:
+            for row in range(0, trueRow, 1):
+                ongoingCell = (augMatrix[row][column], 
+                               augMatrix[row][trueCol]/augMatrix[row][column],
+                               (row, column));
+                if augMatrix[row, column] >= 0 and 0 <= ongoingCell[1] < pivot[1]:
+                    pivot = ongoingCell;
+            break;
+    return pivot;
     
     
     
 
-
-
-def test():
-    a = np.array([[1, 2, 3],
-                  [4, 5, 6],
-                  [7, 8, 9],
-                  [10, 11, 12]]);
-    
-    return a;
-
-
+def test(): #for testing something whilst coding
+    return 0;
 
 
 
 
 
 if __name__ == '__main__':
-    mat = test();
-    generatePivotTable(mat);
+    mat1 = generateMatrix();
+    mat2 = generatePivotTable(mat1);
+    piv = pickPivot(mat2[2]);
+    print(piv);
