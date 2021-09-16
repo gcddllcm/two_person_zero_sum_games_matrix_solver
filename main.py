@@ -9,7 +9,7 @@ def generateMatrix(): # to get the matrix from user, but for now, just set some 
     # a = np.array([[3, 1],
     #             [-1, 2]]);
     return a;
-    
+
     
     
 
@@ -160,14 +160,17 @@ def ultimateSolver(matrix):
 
 
 
-def test(): #for testing something whilst coding
-    return 0;
-
-
-
-
 if __name__ == '__main__':
-    mat1 = generateMatrix();
-    mat2 = generatePivotTable(mat1);
-    piv = pickPivot(mat2[2]);
-    print(piv);
+    test = np.array([
+        [3, 3, 2, 2, 1, 1], 
+        [3, 2, 2, 1, 1, 0], 
+        [2, 2, 1, 1, 0, 0],
+        [2, 1, 1, 0, 0, 1],
+        [1, 1, 0, 0, 1, 2],
+        [1, 0, 0, 1, 2, 3]
+        ]);
+    play = ultimateSolver(test)
+    print(test)
+    print(f"\nX strategy:\n{play[0]}")
+    print(f"\nY strategy:\n{play[1]}")
+    print(f"\nV: {play[2]}")
