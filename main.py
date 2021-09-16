@@ -103,9 +103,65 @@ def detectPivotTable(rowIndex, colIndex, augMatrix):
     
     return rowIndex, colIndex, augMatrix_latest;
 
+
+
+
+def ultimateSolver(matrix):
+    pivotTable = generatePivotTable(matrix);
+    minimumVal = pivotTable[3];
+    pivotTable = detectPivotTable(pivotTable[0], pivotTable[1], pivotTable[2]);
+    
+    bottomRow = list(
+        pivotTable[2][pivotTable[2].shape[0]-1, :]
+    );
+    btwPop = bottomRow.pop();
+    
+    
+    while any(entry < 0 for entry in bottomRow):
+        pivotTable = detectPivotTable(pivotTable[0], pivotTable[1], pivotTable[2]);
+        bottomRow = list(
+            pivotTable[2][pivotTable[2].shape[0]-1, :]
+        );
+        btwPop = bottomRow.pop();
+        
+    
+    left = pivotTable[0];
+    top = pivotTable[1];
+    xStrategies = {};
+    yStrategies = {};
+    
+    
+    for tag in range(0, len(top), 1):
+        if "x" in top[tag]:
+            index = int(top[tag].split("x")[1]) + 1;
+            xStrategies[f"row {index}"] = round(pivotTable[2][pivotTable[2].shape[0]-1, tag] / btwPop, 5);
+
+        else:
+            index = int(top[tag].split("y")[1]) + 1;
+            yStrategies[f"column {index}"] = 0;
+    
+    
+    for tag in range(0, len(left), 1):
+        if "y" in left[tag]:
+            index = int(left[tag].split("y")[1]) + 1;
+            yStrategies[f"column {index}"] = round(pivotTable[2][tag, pivotTable[2].shape[1]-1] / btwPop, 5);
+            
+        else:
+            index = int(left[tag].split("x")[1]) + 1;
+            xStrategies[f"row {index}"] = 0;
+            
+    
+    xStrategies = np.array([value for (key, value) in sorted(xStrategies.items())]).tolist();
+    yStrategies = np.array([value for (key, value) in sorted(yStrategies.items())]).tolist();
+    valueOfTheGame = 1/btwPop - minimumVal;
+    
+    return xStrategies, yStrategies, valueOfTheGame;
+
+
+
+
 def test(): #for testing something whilst coding
     return 0;
-
 
 
 
