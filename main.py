@@ -1,18 +1,6 @@
 import numpy as np;
 
-
-def generateMatrix(): # to get the matrix from user, but for now, just set some matrix var
-    a = np.array([[1, 2, 3],
-                [4, 5, 6],
-                [7, 8, 9],
-                [10, 11, 12]]);
-    # a = np.array([[3, 1],
-    #             [-1, 2]]);
-    return a;
-
-    
-    
-
+  
 def generatePivotTable(matrix):
     minimumVal = 2 * abs(np.min(matrix));
     rowIndex = [];
@@ -161,7 +149,7 @@ def ultimateSolver(matrix):
 
 
 if __name__ == '__main__':
-    test = np.array([
+    gameMatrix = np.array([
         [3, 3, 2, 2, 1, 1], 
         [3, 2, 2, 1, 1, 0], 
         [2, 2, 1, 1, 0, 0],
@@ -169,8 +157,9 @@ if __name__ == '__main__':
         [1, 1, 0, 0, 1, 2],
         [1, 0, 0, 1, 2, 3]
         ]);
-    play = ultimateSolver(test)
-    print(test)
-    print(f"\nX strategy:\n{play[0]}")
-    print(f"\nY strategy:\n{play[1]}")
-    print(f"\nV: {play[2]}")
+    gameResults = ultimateSolver(gameMatrix);
+    print("\nYour Game's Matrix is");
+    print(gameMatrix);
+    print(f"\nAlice strategy: {gameResults[0]}");
+    print(f"\nBob strategy: {gameResults[1]}");
+    print(f"\nValue of the game is {gameResults[2]}");
